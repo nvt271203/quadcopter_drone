@@ -9,7 +9,7 @@ orig_mdl = 'quadcopter_package_delivery';
 open_system(orig_mdl);
 quadcopter_package_parameters
 [waypoints, timespot_spl, spline_data, spline_yaw, wayp_path_vis] = ...
-    quadcopter_package_select_trajectory(1);
+    quadcopter_package_select_trajectory(true);
 
 mdl = [orig_mdl '_pct_temp'];
 save_system(orig_mdl,mdl);
