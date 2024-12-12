@@ -1,34 +1,22 @@
-function [waypoints, timespot_spl, spline_data, spline_yaw, wayp_path_vis, input_point] = quadcopter_package_select_trajectory(path_line, varargin)
+function [waypoints, timespot_spl, spline_data, spline_yaw, wayp_path_vis] = quadcopter_package_select_trajectory(default_waypoints, obstacle_point, avoidIt, roundtrip)
 %quadcopter_select_trajectory Obtain parameters for selected quadcopter trajectory
 %   This function returns the essential parameters that define the
 %   quadcopter's trajectory.
 
 % Copyright 2021-2024 The MathWorks, Inc.
 
-if nargin == 2
-    roundtrip = varargin{1};
-else
-    roundtrip = false;
-end
-
-
-% Dữ liệu waypoints
-waypoints = [
-    -2    -2    0   2    5;
-    -2    -2    0   0    0;
-     0.14  6    6   6   0.14
-];
-
-input_point = [3.5; 0; 3.07]; % KHởi tạo tọa độ của chướng ngại vật
-
 max_speed = 1;
 min_speed = 0.1;
 xApproach = [4 0.5];
 vApproach = 0.1;
+waypoints = default_waypoints;
 
 % khúc xử lý
-waypoints = avoid_obstacle(waypoints, input_point);
+if avoidIt
+    waypoints = avoid_obstacle(default_waypoints, obstacle_point);
+end
 
+disp(waypoints);
 % phải có khúc này
 % Tính toán spline và các thông số khác nếu cần
 if exist("xApproach", "var")
